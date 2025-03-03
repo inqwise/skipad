@@ -1,0 +1,1 @@
+﻿<%@ WebHandler Language="C#" CodeBehind="/App_Code/Handlers/ReferralsHandler.cs" Class="Handlers.ReferralsHandler" %>

@@ -1,0 +1,410 @@
+jQuery.extend( {
+
+	visitor : function() {
+	
+		
+		var timeZone = function() {
+			
+			var convert = function(value) {
+		    	var hours = parseInt(value);
+		       	value -= parseInt(value);
+		    	value *= 60;
+		    	var mins = parseInt(value);
+		       	value -= parseInt(value);
+		    	value *= 60;
+		    	var secs = parseInt(value);
+		    	var display_hours = hours;
+		    	// handle GMT case (00:00)
+		    	if (hours == 0) {
+		    		display_hours = "00";
+		    	} else if (hours > 0) {
+		    		// add a plus sign and perhaps an extra 0
+		    		display_hours = (hours < 10) ? "+0"+hours : "+"+hours;
+		    	} else {
+		    		// add an extra 0 if needed 
+		    		display_hours = (hours > -10) ? "-0"+Math.abs(hours) : hours;
+		    	}
+		    	
+		    	mins = (mins < 10) ? "0"+mins : mins;
+		    	return display_hours+":"+mins;
+		    };
+			
+			
+	    	var rightNow = new Date();
+	    	var jan1 = new Date(rightNow.getFullYear(), 0, 1, 0, 0, 0, 0);  // jan 1st
+	    	var june1 = new Date(rightNow.getFullYear(), 6, 1, 0, 0, 0, 0); // june 1st
+	    	var temp = jan1.toGMTString();
+	    	var jan2 = new Date(temp.substring(0, temp.lastIndexOf(" ")-1));
+	    	temp = june1.toGMTString();
+	    	var june2 = new Date(temp.substring(0, temp.lastIndexOf(" ")-1));
+	    	var std_time_offset = (jan1 - jan2) / (1000 * 60 * 60);
+	    	var daylight_time_offset = (june1 - june2) / (1000 * 60 * 60);
+	    	//var dst;
+	    	if (std_time_offset == daylight_time_offset) {
+	    		//dst = "0"; // daylight savings time is NOT observed
+	    	} else {
+	    		// positive is southern, negative is northern hemisphere
+	    		var hemisphere = std_time_offset - daylight_time_offset;
+	    		if (hemisphere >= 0)
+	    			std_time_offset = daylight_time_offset;
+	    		//dst = "1"; // daylight savings time is observed
+	    	}
+	    	var i;
+	    	// check just to avoid error messages
+	    	/*
+	    	if (document.getElementById('timezone')) {
+	
+	    		for (i = 0; i < document.getElementById('timezone').options.length; i++) {
+	    			//if (document.getElementById('timezone').options[i].value == convert(std_time_offset)) {
+	        			alert(convert(std_time_offset) + "__________________")
+	    				document.getElementById('timezone').selectedIndex = i;
+	    				break;
+	    			//}
+	    		}
+	    	}
+	    	*/
+	    	/* convert(std_time_offset) + "_________________" + std_time_offset; */
+	    	return convert(std_time_offset);
+	    	
+	    };
+	    
+		var _screen = function() {
+			return { 
+				width : screen.width, 
+				height : screen.height, 
+				color : ((screen.pixelDepth != undefined) ? screen.pixelDepth : screen.colorDepth) 
+			};
+		};
+		
+		var os = function() {
+			var name ="Unknown OS";
+			var platform = window.navigator.platform;
+			var os = navigator.userAgent;
+    		if (os.indexOf("Win")!=-1) {
+    			if ((os.indexOf("Windows NT 5.1")!=-1) || (os.indexOf("Windows XP")!=-1))
+    				name ="Win XP";
+    			else if ((os.indexOf("Windows NT 7.0")!=-1) || (os.indexOf("Windows NT 6.1")!=-1))
+    				name="Win 7";
+    			else  if ((os.indexOf("Windows NT 6.0")!=-1))
+    				name="Win Vista/Server 08";
+    			else if (os.indexOf("Windows ME")!=-1)
+    				name="Win ME";
+    			else if ((os.indexOf("Windows NT 4.0")!=-1) || (os.indexOf("WinNT4.0")!=-1) || (os.indexOf("WinNT")!=-1))
+    				name="Win NT";
+    			else if ((os.indexOf("Windows NT 5.2")!=-1))
+    				name="Win Server 03";
+    			else if ((os.indexOf("Windows NT 5.0")!=-1) || (os.indexOf("Windows 2000")!=-1))
+    				name="Win 2000";
+    			else if ((os.indexOf("Windows 98")!=-1) || (os.indexOf("Win98")!=-1))
+    				name="Win 98";
+    			else if ((os.indexOf("Windows 95")!=-1) || (os.indexOf("Win95")!=-1) || (os.indexOf("Windows_95")!=-1))
+    				name="Win 95";
+    			else if ((os.indexOf("Win16")!=-1))
+    				name="Win 3.1";
+    			else
+    				name="Win Ver. Unknown";
+
+   				if ((os.indexOf("WOW64")!=-1) || (os.indexOf("x64")!=-1) || (os.indexOf("Win64")!=-1) || (os.indexOf("IA64")!=-1)) 
+       				name = name +" (x64)"
+
+   				else name = name + " (x32)"
+   			}
+   			else if (os.indexOf("Mac")!=-1) 
+				name="MacOS";
+   			else if (os.indexOf("X11")!=-1) 
+				name="UNIX";
+   			else if (os.indexOf("Linux")!=-1) 
+				name="Linux";
+   			
+			return { 
+				name : name, 
+				platform : platform, 
+				cpuClass : window.navigator.cpuClass,
+				oscpu : window.navigator.oscpu,
+				systemLanguage : window.navigator.systemLanguage
+			};
+		};
+		
+		
+		var browser = function() {
+			
+			var isIE8Browser = function() {
+		    	var rv = -1;
+		    	var ua = navigator.userAgent;
+		    	var re = new RegExp("Trident\/([0-9]{1,}[\.0-9]{0,})");
+		    	//var re = new RegExp("Trident \/([0-9]{1,}[\.0-9]{0,})");
+		    	if (re.exec(ua) != null) { rv = parseFloat(RegExp.$1); }
+		    	return (rv == 4);
+		    };
+			
+			var version = function() {
+				var browserversion = "";
+				var ie = false;
+				
+				//alert(navigator.userAgent + "________________" + (/Chrome[\/\s](\d+\.\d+)/.test(navigator.userAgent)));
+				
+				if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) { //test for MSIE x.x;
+					ie = true;
+					var ieversion=new Number(RegExp.$1) // capture x.x portion and store as a number
+					if (ieversion>=8)
+						browserversion = "IE8 or +"
+					else if (ieversion>=7) {
+						if (isIE8Browser()) {
+							browserversion = "IE8+ (IE7 run mode)";
+						} else { browserversion = "IE7.x"; }
+					} else if (ieversion>=6)
+						browserversion = "IE6.x"
+					else if (ieversion>=5)
+						browserversion = "IE5.x"
+					else
+						browserversion = "IE (Ver?)"
+				} else if (/Opera[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+					var oprversion=new Number(RegExp.$1) // capture x.x portion and store as a number
+					if (oprversion>=10)
+						browserversion = "Opera 10.x or +"
+					else if (oprversion>=9)
+						browserversion = "Opera 9.x"
+					else if (oprversion>=8)
+						browserversion = "Opera 8.x"
+					else if (oprversion>=7)
+						browserversion = "Opera 7.x"
+					else
+						browserversion = "Opera (Ver?)"
+				} else if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+					var ffversion=new Number(RegExp.$1) // capture x.x portion and store as a number
+					if (ffversion>=3)
+						browserversion = "Firefox 3.x or +"
+					else if (ffversion>=2)
+						browserversion = "Firefox 2.x"
+					else if (ffversion>=1)
+						browserversion = "Firefox 1.x"
+					else
+						browserversion = "Firefox (Ver?)"
+				} else if (/Chrome[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+					var chromeversion=new Number(RegExp.$1) // capture x.x portion and store as a number
+					if (chromeversion>=9)
+						browserversion = "Chrome 9.x or +"
+					else if (chromeversion>=3)
+						browserversion = "Chrome 3.x"
+					else if (chromeversion>=2)
+						browserversion = "Chrome 2.x"
+					else if (chromeversion>=1)
+						browserversion = "Chrome 1.x"
+					else
+						browserversion = "Chrome (Ver?)"
+				} else if (/Safari[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+					var oprversion=new Number(RegExp.$1) // capture x.x portion and store as a number
+					if (oprversion>=5)
+						browserversion = "Safari 5x or +"
+					else if (oprversion>=4)
+						browserversion = "Safari 4.x"
+					else if (oprversion>=3)
+						browserversion = "Safari 3.x"
+					else if (oprversion>=2)
+						browserversion = "Safari 2.x"
+					else
+						browserversion = "Safari (Ver?)"
+				} else {
+					browserversion = "Browser?/Ver?" 
+				}
+				return browserversion;
+			};
+			
+			var java = function() {
+				var isJavaInstalled = false;
+				// Netscape style plugin detection
+	    		if (navigator.plugins && navigator.plugins.length) {
+	    		    for (x = 0; x < navigator.plugins.length; x++) {
+	    		        if (navigator.plugins[x].name.indexOf('Java(TM)') != -1) {
+	    		        	isJavaInstalled = true;
+	    		            break;
+	    		        }
+	    		    }
+	    		}
+	    		
+	    		// The other way to check if Java is enabled
+	    		if (navigator.javaEnabled()) {
+	    			isJavaInstalled = true;
+	    		}
+	    		
+	    		return { 
+	    			isJavaInstalled : isJavaInstalled
+	    		};
+			};
+			
+			var flash = function() {
+				
+				isFlashInstalled = true;
+	    		
+				flash_versions = 10;
+				version = '0.0';
+	    		 
+	    		// Netscape style plugin detection
+	    		if (navigator.plugins && navigator.plugins.length) {
+	    		    for (x = 0; x < navigator.plugins.length; x++) {
+	    		        if (navigator.plugins[x].name.indexOf('Shockwave Flash') != -1) {
+	    		            version = navigator.plugins[x].description.split('Shockwave Flash ')[1];
+	    		            isFlashInstalled = true;
+	    		            break;
+	    		        }
+	    		    }
+	    		}
+	    		 
+	    		// ActiveX style plugin detection
+	    		else if (window.ActiveXObject) {
+	    		    for (x = 2; x <= flash_versions; x++) {
+	    		        try {
+	    		            oFlash = eval("new ActiveXObject('ShockwaveFlash.ShockwaveFlash." + x + "');");
+	    		            if (oFlash) {
+	    		            	isFlashInstalled = true;
+	    		                version = x + '.0';
+	    		            }
+	    		        }
+	    		        catch(e) { }
+	    		    }
+
+	    		}
+
+	    		return { 
+	    			isFlashInstalled : isFlashInstalled, 
+	    			version : version 
+	    		};
+			};
+			
+			return { 
+				appName : window.navigator.appName, 
+				vendor : window.navigator.vendor, 
+				appCodeName : window.navigator.appCodeName,
+				appVersion : window.navigator.appVersion,
+				product : window.navigator.product,
+				buildNumber : ((window.opera) ? window.opera.buildNumber() : window.navigator.productSub ),
+				userAgent : window.navigator.userAgent,
+				language : ((window.navigator.language === undefined) ? window.navigator.browserLanguage : window.navigator.language),
+				cookieEnabled : window.navigator.cookieEnabled,
+				version : version(), 
+				java : java(), 
+				flash : flash(),
+				timeZone : timeZone()
+			};
+		};
+		
+		return { os : os(), browser : browser(), screen : _screen() };
+	}
+});
+
+
+/*
+/*
+init: function () {
+	this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
+	this.version = this.searchVersion(navigator.userAgent)
+		|| this.searchVersion(navigator.appVersion)
+		|| "an unknown version";
+	this.os = this.searchString(this.dataOS) || "an unknown OS";
+},
+searchString: function (data) {
+	for (var i=0;i<data.length;i++)	{
+		var dataString = data[i].string;
+		var dataProp = data[i].prop;
+		this.versionSearchString = data[i].versionSearch || data[i].identity;
+		if (dataString) {
+			if (dataString.indexOf(data[i].subString) != -1)
+				return data[i].identity;
+		}
+		else if (dataProp)
+			return data[i].identity;
+	}
+},
+searchVersion: function (dataString) {
+	var index = dataString.indexOf(this.versionSearchString);
+	if (index == -1) return;
+	return parseFloat(dataString.substring(index+this.versionSearchString.length+1));
+},
+dataBrowser: [
+	{
+		string: navigator.userAgent,
+		subString: "Chrome",
+		identity: "Chrome"
+	},
+	{ 	string: navigator.userAgent,
+		subString: "OmniWeb",
+		versionSearch: "OmniWeb/",
+		identity: "OmniWeb"
+	},
+	{
+		string: navigator.vendor,
+		subString: "Apple",
+		identity: "Safari",
+		versionSearch: "Version"
+	},
+	{
+		prop: window.opera,
+		identity: "Opera"
+	},
+	{
+		string: navigator.vendor,
+		subString: "iCab",
+		identity: "iCab"
+	},
+	{
+		string: navigator.vendor,
+		subString: "KDE",
+		identity: "Konqueror"
+	},
+	{
+		string: navigator.userAgent,
+		subString: "Firefox",
+		identity: "Firefox"
+	},
+	{
+		string: navigator.vendor,
+		subString: "Camino",
+		identity: "Camino"
+	},
+	{		// for newer Netscapes (6+)
+		string: navigator.userAgent,
+		subString: "Netscape",
+		identity: "Netscape"
+	},
+	{
+		string: navigator.userAgent,
+		subString: "MSIE",
+		identity: "Explorer",
+		versionSearch: "MSIE"
+	},
+	{
+		string: navigator.userAgent,
+		subString: "Gecko",
+		identity: "Mozilla",
+		versionSearch: "rv"
+	},
+	{ 		// for older Netscapes (4-)
+		string: navigator.userAgent,
+		subString: "Mozilla",
+		identity: "Netscape",
+		versionSearch: "Mozilla"
+	}
+],
+dataOS : [
+	{
+		string: navigator.platform,
+		subString: "Win",
+		identity: "Windows"
+	},
+	{
+		string: navigator.platform,
+		subString: "Mac",
+		identity: "Mac"
+	},
+	{
+		string: navigator.userAgent,
+		subString: "iPhone",
+		identity: "iPhone/iPod"
+    },
+	{
+		string: navigator.platform,
+		subString: "Linux",
+		identity: "Linux"
+	}
+]
+*/

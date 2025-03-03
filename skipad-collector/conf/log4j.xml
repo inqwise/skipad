@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<!--layout class="org.apache.log4j.SimpleLayout"/-->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%p] %d %c %M - %m%n"/>
+		</layout>
+		<!--filter class="org.apache.log4j.filter.ExpressionFilter">
+			<param name="expression" value="VideoLoad" />
+			<param name="acceptOnMatch" value="false"/>
+		</filter-->
+	</appender>
+	
+	<appender name="FileAppender" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="c:/logs/events.log"/>
+		<param name="Threshold" value="TRACE"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m%n"/>
+		</layout>
+		<!-- filter class="org.apache.log4j.filter.ExpressionFilter">
+			<param name="expression" value="MSG ~= ErrorsHandler: received error. Details:*" />
+			<param name="acceptOnMatch" value="false"/>
+	  	</filter-->
+		<!-- rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+      		<param name="FileNamePattern" value="/wombat/foo.%d{yyyy-MM}.gz"/>
+    	</rollingPolicy-->
+	</appender>
+	
+	<appender name="S3AppenderEvents" class="log.appenders.s3.RollingFileS3Appender">
+		<param name="File" value="" />
+		<param name="MaxFileSize" value="5MB" />
+		<param name="Bucket" value="skipad.dev" />
+		<param name="Subfolder" value="events" />
+		<param name="CredentialsProvider" value="log.appenders.s3.credentials.Log4JParamCredentialsProvider" />
+		<param name="AccessKey" value="" />
+		<param name="SecretKey" value="" />
+		<param name="MaxBackupIndex" value="1" />
+		<param name="ExpirationInSeconds" value="60" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+             <param name="levelMin" value="INFO" />
+             <param name="levelMax" value="INFO" />
+     	</filter>
+	</appender>
+	
+	<appender name="S3AppenderRequests" class="log.appenders.s3.RollingFileS3Appender">
+		<param name="File" value="" />
+		<param name="MaxFileSize" value="5MB" />
+		<param name="Bucket" value="skipad.dev" />
+		<param name="Subfolder" value="requests" />
+		<param name="CredentialsProvider" value="log.appenders.s3.credentials.Log4JParamCredentialsProvider" />
+		<param name="AccessKey" value="" />
+		<param name="SecretKey" value="" />
+		<param name="MaxBackupIndex" value="1" />
+		<param name="ExpirationInSeconds" value="60" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m%n" />
+		</layout>
+	</appender>
+	
+	<category name="com.skipad.collector.managers.EventsManager$DataLogger"  additivity="false">
+		<priority value="info"/>
+		<appender-ref ref="ConsoleAppender" />
+		<appender-ref ref="S3AppenderEvents"/>
+   	</category>
+   	
+   	<logger name="com.skipad.collector.managers.RequestsManager$DataLogger"  additivity="false">
+		<priority value="info"/>
+		<appender-ref ref="ConsoleAppender" />
+		<appender-ref ref="S3AppenderRequests"/>
+   	</logger>
+   	
+   	<category name="com.mchange.v2" additivity="true">
+   		<priority value="error"/>
+   		<appender-ref ref="ConsoleAppender"/>
+  	</category>
+  	
+	<root>
+		<priority value ="Debug" />
+		<appender-ref ref="ConsoleAppender"/>
+		<appender-ref ref="FileAppender"/>
+	</root>
+
+</log4j:configuration>

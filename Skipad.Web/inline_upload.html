@@ -1,0 +1,1348 @@
+﻿<!DOCTYPE HTML>
+<!--
+/*
+ * jQuery File Upload Plugin Basic Demo 1.2.2
+ * https://github.com/blueimp/jQuery-File-Upload
+ *
+ * Copyright 2013, Sebastian Tschan
+ * https://blueimp.net
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+-->
+<html lang="en">
+	<head>
+	<!-- Force latest IE rendering engine or ChromeFrame if installed -->
+	<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+	<meta charset="utf-8">
+	<title></title>
+	
+	<style type="text/css">
+	html{color:#000;background:#ffffff;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}del,ins{text-decoration:none;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:baseline;}sub{vertical-align:baseline;}legend{color:#000;}input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}input,button,textarea,select{*font-size:100%;}
+	html, body{background:#ffffff;}
+	body{font-family:arial,helvetica,sans-serif;font-size:12px;color:#666;margin:0;padding:0;line-height:16px;word-wrap:break-word;unicode-bidi:embed;}
+	a{text-decoration:none; color: #1155CC }
+	a:hover{text-decoration:underline;}
+	.button-green{
+		padding:1px 6px;
+		display:inline-block;
+		text-decoration:none;
+		font-weight:bold;
+		color:#fff;
+		background-color:#57995B;
+		border:1px solid #457D45;
+		X-webkit-box-shadow:0 0 3px #CCCCCC;
+		X-moz-box-shadow:0 0 3px #CCCCCC;
+		Xbox-shadow:0 0 3px #CCCCCC;
+		X-webkit-border-radius:3px;
+		X-moz-border-radius:3px;
+		Xborder-radius:3px;
+		Xmargin:2px;
+		text-align:center;
+		text-shadow:0 1px 1px #3B6E22;
+		background-image:-moz-linear-gradient(top, #57995B, #518F55);
+		background-image:-webkit-gradient(linear, left top, left bottom, from(#57995B), to(#518F55));
+		background-image:-webkit-linear-gradient(#57995B, #518F55);
+		background-image:     -ms-linear-gradient(#57995B, #518F55); /* IE10 */
+		background-image:-o-linear-gradient(#57995B, #518F55);
+		background-image:linear-gradient(top, #57995B, #518F55);
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#57995B', endColorstr='#518F55');
+		cursor:pointer;
+	}
+	input.button-green { padding: 1px 4px;}
+	.button-green:hover{
+		background-color:#559658;
+		background-image:-moz-linear-gradient(top, #559658, #49894d);
+		background-image:-webkit-gradient(linear, left top, left bottom, from(#559658), to(#49894d));
+		background-image:-webkit-linear-gradient(#559658, #49894d);
+		background-image:     -ms-linear-gradient(#559658, #49894d); /* IE10 */
+		background-image:-o-linear-gradient(#559658, #49894d);
+		background-image:linear-gradient(top, #559658, #49894d);
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#559658', endColorstr='#49894d');
+		text-decoration:none;
+	}
+	.button-green span{color:#fff !important;text-decoration:none;padding:1px 0 2px;display:inline-block;margin:0;line-height:13px;}
+	.button-green:hover span{color:#fff !important;text-decoration:none;}
+	.button-green.ui-button-disabled {
+		filter: none;
+		background: none repeat scroll 0 0 #F2F2F2;
+	    border-color: #C8C8C8;
+	    box-shadow: none;
+	    cursor: default;
+	    text-shadow: none;
+	}
+	.button-green.ui-button-disabled span {
+		color: #B8B8B8 !important;
+	}
+	.button-green.ui-button-disabled span i {
+		opacity: 0.2;
+		filter: alpha(opacity = 20);
+	}
+	
+	.button-white{
+		padding:1px 6px;
+		display:inline-block;
+		text-decoration:none;
+		font-weight:bold;
+		color:#333;
+		text-align:center;
+		text-shadow:0 1px 0 #fff;
+		background-color:#e5e5e5;
+		background-image:-moz-linear-gradient(top, #f9f9f9, #e5e5e5);
+		background-image:-webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#e5e5e5));
+		background-image:-webkit-linear-gradient(#f9f9f9, #e5e5e5);
+		background-image:     -ms-linear-gradient(#f9f9f9, #e5e5e5); /* IE10 */
+		background-image:-o-linear-gradient(#f9f9f9, #e5e5e5);
+		background-image:linear-gradient(top, #f9f9f9, #e5e5e5);
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9', endColorstr='#e5e5e5');
+		cursor:pointer;
+		border-color: #999999 #999999 #888888;
+	    border-image: none;
+	    border-style: solid;
+	    border-width: 1px;
+	}
+	input.button-white { padding: 1px 4px;}
+	.button-white:hover{
+		background-color:#ddd;
+		background-image:-moz-linear-gradient(top, #e5e5e5, #dddddd);
+		background-image:-webkit-gradient(linear, left top, left bottom, from(#e5e5e5), to(#dddddd));
+		background-image:-webkit-linear-gradient(#e5e5e5, #dddddd);
+		background-image:     -ms-linear-gradient(#e5e5e5, #dddddd); /* IE10 */
+		background-image:-o-linear-gradient(#e5e5e5, #dddddd);
+		background-image:linear-gradient(top, #e5e5e5, #dddddd);
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e5e5e5', endColorstr='#dddddd');
+		text-decoration:none;
+		border-color:#999;
+	}
+	.button-white span{color:#333 !important;text-decoration:none;padding:1px 0 2px;display:inline-block;margin:0;line-height:13px;}
+	.button-white:hover span{color:#333 !important;text-decoration:none;}
+	.button-white.ui-button-disabled {
+		filter: none;
+		background: none repeat scroll 0 0 #F2F2F2;
+	    border-color: #C8C8C8;
+	    box-shadow: none;
+	    cursor: default;
+	    text-shadow: none;
+	}
+	.button-white.ui-button-disabled span {
+		color: #B8B8B8 !important;
+	}
+	.button-white.ui-button-disabled span i {
+		opacity: 0.2;
+		filter: alpha(opacity = 20);
+	}
+	
+	input[type="email"], input[type="number"], input[type="password"], input[type="tel"], input[type="text"], input[type="url"], textarea {
+		Xborder-color: #666666 #CCCCCC #CCCCCC;
+		border-color: #C0C0C0 #D9D9D9 #D9D9D9;
+	    border-style: solid;
+	    border-width: 1px;
+	    font-family: inherit;
+	    font-size: 12px;
+	    margin: 0;
+	    outline-style: none;
+	    padding: 2px;
+	}
+	input[type="email"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="tel"]:hover, input[type="text"]:hover, input[type="url"]:hover, textarea:hover {
+	    -moz-border-bottom-colors: none;
+	    -moz-border-left-colors: none;
+	    -moz-border-right-colors: none;
+	    -moz-border-top-colors: none;
+	    border-color: #A0A0A0 #B9B9B9 #B9B9B9;
+	    border-image: none;
+	    border-right: 1px solid #B9B9B9;
+	    border-style: solid;
+	    border-width: 1px;
+	    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+		-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+	    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+	}
+	input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="url"]:focus, textarea:focus {
+	    border: 1px solid #4D90FE;
+	    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+		-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+	    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+	    outline: medium none;
+	}
+	
+	
+	::-webkit-input-placeholder { color: #999; } /* WebKit browsers */
+	:-moz-placeholder { color: #999; opacity: 1; } /* Mozilla Firefox 4 to 18 */
+	::-moz-placeholder { color: #999; opacity: 1; } /* Mozilla Firefox 19+ */
+	:-ms-input-placeholder { color: #999; } /* Internet Explorer 10+ */
+	input:-moz-placeholder { color:#999; opacity:1; }
+	
+	
+	.fileinput-button {
+	    overflow: hidden;
+	    position: relative;
+	}
+	.fileinput-button input {
+	    cursor: pointer;
+	    direction: ltr;
+	    height: 19px;
+	    left: 0;
+	    margin: 0;
+	    opacity: 0;
+	    position: absolute;
+	    top: 0;
+	}
+	input[type="file"] {
+	    display: block;
+	}
+	.progress {
+		height:16px;
+		overflow:hidden;
+		background-color:#f5f5f5;
+		Xborder-radius:3px;
+		-webkit-box-shadow:inset 0 1px 2px rgba(0,0,0,0.1);
+		box-shadow:inset 0 1px 2px rgba(0,0,0,0.1);
+		border: 1px solid #CCCCCC;
+		width: 100px;
+		float: left;
+	}
+	.progress-bar {
+		float:left;
+		width:0;
+		height:100%;
+		color:#fff;
+		text-align:center;
+		background-color:#428bca;
+		-webkit-box-shadow:inset 0 -1px 0 rgba(0,0,0,0.15);
+		box-shadow:inset 0 -1px 0 rgba(0,0,0,0.15);
+	}
+	.progress-bar-success {
+	    Xbackground-color: #5CB85C;
+	}
+	.percents { float: left; margin-left: 6px;}
+	
+	.files { height: 240px; overflow-y: scroll; border: 1px solid #CCCCCC; }
+	.files li { width: 82px; float: left; height: 70px; padding: 5px; }
+	.files li:hover { background: #efefef; cursor: pointer; }
+	
+	
+	.filename {
+		display: table-cell;
+	    max-width: 120px;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+	    width: 100%;
+	}
+	
+	.empty-video-preview-container,
+	.empty-image-preview-container,
+	.empty-audio-preview-container {
+		height: 45px;
+	    width: 80px; 
+		border: 1px solid #ccc; 
+		background: #efefef;
+		position: relative;
+		margin-right: 6px;
+		float: left;
+	}
+	.empty-video-preview-container-details,
+	.empty-image-preview-container-details,
+	.empty-audio-preview-container-details {
+		float: left;
+	}
+	
+	.empty-video-preview-container-details span,
+	.empty-image-preview-container-details span,
+	.empty-audio-preview-container-details span {
+		color: #333333;
+    	font-weight: bold;
+	}
+	
+	#video_error, #image_error {
+		color: #BA0A1C;
+		Xpadding: 5px 0 0px;
+	}
+	</style>
+	
+	</head>
+	<body>
+		
+		
+		<div id="video" style="clear: both; display: none;">
+			<div id="video_upload_container">
+				<div id="video_upload_preview" style="clear:both; overflow: hidden; padding-bottom: 6px; display: none;">
+					<div id="video_preview" class="empty-video-preview-container"></div>
+					<div class="empty-video-preview-container-details" style="width: 160px;">
+						<table cellpadding="0" cellspacing="0" border="0">
+							<tr>
+								<td>Name:&nbsp;</td>
+								<td><span id="video_name" class="filename"></span></td>
+							</tr>
+							<tr>
+								<td>Size:</td>
+								<td><span id="video_size"></span></td>
+							</tr>
+						</table>
+					</div>
+					<div style="float: left">
+						<a id="button_video_remove" title="Remove" style="cursor: pointer;">Remove</a>
+					</div>
+				</div>
+				<div id="video_upload_actions">
+					<div id="video_form">
+						<div style="padding-bottom: 6px; color: #333">Select a Video for the ad:</div>
+						<div style="clear: both;">
+							<div style="float: left; min-height: 22px; margin-right: 6px; display: none;">
+								<span class="button-white btn-success fileinput-button" id="button_video_upload">
+							        <i></i>
+							        <span>Browse</span>
+							        <input id="video_upload" type="file" name="files[]">
+							    </span>
+						    </div>
+						    <div style="float: left; min-height: 22px;">
+							    <div style="float: left;">
+									<input type="text" id="text_video_url" autocomplete="off" placeholder="Enter a Video URL" />
+								</div>
+								<div style="float: left; margin-left: 6px;">
+									<a class="button-white ui-button-disabled" title="OK" id="button_video_download"><span>OK</span></a>
+								</div>
+							</div>
+						</div>
+						<div style="clear: both; display: none" id="video_error">
+		    				<label>Invalid URL. Please try again.</label>
+		    			</div>
+					</div>
+					<div style="clear: both; padding-top: 5px; display: none;" id="video_progress_container">
+					    <div id="video_progress" class="progress">
+					        <div class="progress-bar progress-bar-success"></div>
+					    </div>
+					    <div id="video_progress_percents" class="percents">0%</div>
+				    </div>
+				</div>
+		    </div>
+	    </div>
+	    
+		<div id="image" style="clear: both; display: none;">
+			<div id="image_upload_container">	
+				<div id="image_upload_preview" style="clear:both; overflow: hidden;padding-bottom: 6px; display: none;">
+					<div id="image_preview" class="empty-image-preview-container"></div>
+					<div class="empty-image-preview-container-details" style="width: 160px;">
+						<table cellpadding="0" cellspacing="0" border="0">
+							<tr>
+								<td>Name:&nbsp;</td>
+								<td><span id="image_name" class="filename"></span></td>
+							</tr>
+							<tr>
+								<td>Size:</td>
+								<td><span id="image_size"></span></td>
+							</tr>
+						</table>
+					</div>
+					<div style="float: left">
+						<a id="button_image_remove" title="Remove" style="cursor: pointer;">Remove</a>
+					</div>
+				</div>
+				<div id="image_upload_actions">
+					<div id="image_form">
+						<div style="padding-bottom: 6px; color: #333">Select an Image for the ad:</div>
+						<div style="clear: both;">
+							<div style="float: left; min-height: 22px; margin-right: 6px;">
+								<span class="button-white btn-success fileinput-button" id="button_image_upload">
+							        <i></i>
+							        <span>Browse</span>
+							        <input id="image_upload" type="file" name="files[]">
+							    </span>
+						    </div>
+						    <div style="float: left; min-height: 22px; margin-right: 6px;">or</div>
+						    <div style="float: left; min-height: 22px;">
+							    <div style="float: left">
+									<input type="text" id="text_image_url" autocomplete="off" placeholder="Enter an Image URL" />
+								</div>
+								<div style="float: left; margin-left: 6px;">
+									<a class="button-white ui-button-disabled" title="OK" id="button_image_download"><span>OK</span></a>
+								</div>
+							</div>
+						</div>
+						<div style="clear: both; display: none" id="image_error">
+		    				<label>Invalid URL. Please try again</label>
+		    			</div>
+					</div>
+					<div style="clear: both; padding-top: 5px; display: none;" id="image_progress_container">
+					    <div id="image_progress" class="progress">
+					        <div class="progress-bar progress-bar-success"></div>
+					    </div>
+					    <div id="image_progress_percents" class="percents">0%</div>
+				    </div>
+				</div>
+		    </div>
+	    </div>
+		
+		<div id="audio" style="clear: both; display: none">
+			<div id="audio_upload_container">
+				<div id="audio_upload_preview" style="clear: both; overflow: hidden; padding-bottom: 6px; display: none">
+					<div id="audio_preview" class="empty-audio-preview-container" style="display: none"></div>
+					<div class="empty-audio-preview-container-details" style="width: 160px;">
+						<table cellpadding="0" cellspacing="0" border="0">
+							<tr>
+								<td>Name:&nbsp;</td>
+								<td><span id="audio_name" class="filename"></span></td>
+							</tr>
+						</table>
+					</div>
+					<div style="float: left">
+						<a id="button_audio_remove" title="Remove" style="cursor: pointer;">Remove</a>
+					</div>
+				</div>
+				<div id="audio_upload_actions">
+					<div id="audio_form">
+						<div style="padding-bottom: 6px; color: #333">Select an Audio for the ad:</div>
+						<div style="clear: both">
+							<div style="float: left; min-height: 22px; margin-right: 6px;">
+								<span class="button-white btn-success fileinput-button" id="button_audio_upload">
+							        <i></i>
+							        <span>Browse</span>
+							        <input id="audio_upload" type="file" name="files[]">
+							    </span>
+						    </div>
+						    <div style="float: left; min-height: 22px; margin-right: 6px;">or</div>
+						    <div style="float: left; min-height: 22px;">
+							    <div style="float: left">
+									<input type="text" id="text_audio_url" autocomplete="off" placeholder="Enter an Audio URL" />
+								</div>
+								<div style="float: left; margin-left: 6px;">
+									<a class="button-white ui-button-disabled" title="OK" id="button_audio_download"><span>OK</span></a>
+								</div>
+							</div>
+						</div>
+						<div style="clear: both; display: none" id="audio_error">
+		    				<label>Invalid URL. Please try again</label>
+		    			</div>
+					</div>
+					<div id="audio_progress_container" style="clear: both; padding-top: 5px; display: none">
+						<div id="audio_progress" class="progress">
+							<div class="progress-bar progress-bar-success"></div>
+						</div>
+						<div id="audio_progress_percents" class="precents">0%</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	    
+	    
+	    
+	    
+	    
+	    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	    <script type="text/javascript" src="scripts/utils/utils.js"></script>
+	    
+	    <script type="text/javascript">
+	    (function addXhrProgressEvent($) {
+	    	var originalXhr = $.ajaxSettings.xhr;
+	    	$.ajaxSetup({
+	    		xhr: function() {
+	    			var req = originalXhr(), that = this;
+	    			if (req) {
+	    				if (typeof req.addEventListener == "function" && that.progress !== undefined) {
+	    						req.addEventListener("progress", function(evt) {
+	    						that.progress(evt);
+	    					}, false);
+	    				}
+	    				if (typeof req.upload == "object" && that.progressUpload !== undefined) {
+	    						req.upload.addEventListener("progress", function(evt) {
+	    						that.progressUpload(evt);
+	    					}, false);
+	    				}
+	    			}
+	    			return req;
+	    		}
+	    	});
+	    })(jQuery);
+	    </script>
+	    
+	    <script type="text/javascript" src="scripts/fileupload/vendor/jquery.ui.widget.js"></script>
+		<script type="text/javascript" src="scripts/fileupload/jquery.iframe-transport.js"></script>
+		<script type="text/javascript" src="scripts/fileupload/jquery.fileupload.js"></script>
+		<script type="text/javascript">
+
+		var resourceTypeId = ($.getUrlParam("resource_type_id") != "" ? parseInt($.getUrlParam("resource_type_id")) : 2);
+		
+		var resourceId = $.getUrlParam("resource_id");
+		//console.log(" iframe -> " + resourceId);
+		
+		var thumbnailResourceId = $.getUrlParam("thumbnail_resource_id");
+		
+		var modeId = ($.getUrlParam("mode_id") != "" ? parseInt($.getUrlParam("mode_id")) : 1);
+		var index = $.getUrlParam("index");
+
+		/*jslint unparam: true */
+		/*global window, $ */
+		$(function () {
+		    'use strict';
+		    // Change this to the location of your server-side upload handler:
+		    var url = "handlers/import.ashx";
+		              
+		    
+		    
+		    
+		    
+		    
+			function renderVideo(data) {
+				
+				$("#video_name").text(data[0].name);
+				$("#video_size").text(data[0].width + "x" + data[0].height);
+				
+				$("#video_preview").empty();
+				
+				var img = new Image();
+					img.width = 80;
+
+				// wrap our new image in jQuery, then:
+				$(img).load(function () {
+			      // set the image hidden by default    
+			      $(this).hide();
+			    
+			      	$("#video_preview").append(this);
+			    	
+			      	// fade our image in to create a nice effect
+			      	$(this).show();
+
+			    })
+			    .error(function () {
+			    	// error
+			    })
+			    .attr("src", data[0].thumbnailUrl);
+				
+				
+				
+				setTimeout(function(){
+					$("#video_upload_preview").show();
+					$("#video_upload_actions").hide();
+					
+					$("#video_progress_container").hide();
+					// $("#video_cancel_action").show();
+					
+				}, 300);
+				
+				
+				
+				window.top.setVideo(data, index);
+				
+			};
+		    
+			
+			
+			
+		    $('#video_upload').fileupload({
+		    	url: url + "?resourceTypeId=1&resourceId=" + resourceId + "&thumbnailResourceId=" + thumbnailResourceId,
+		        dataType: 'json',
+				pasteZone : null,
+				dropZone : null,
+	        	start : function (e) {
+				
+					//resourceId = window.top.getResourceId(1));
+		            
+		        	$("#button_video_upload").addClass("ui-button-disabled");
+					
+		        	//$("#video_error").hide();
+		        	window.top.hideVideoError();
+		        	
+		        	$("#video_form").hide(); // new
+		        	$("#video_progress_container").show();
+					
+		        	//console.log('Uploads started');
+		        },
+		        done: function (e, data) {
+		            
+		        	$("#button_video_upload").removeClass("ui-button-disabled");
+		        	renderVideo(data.result);
+		        	
+		        },
+				fail : function (e) {
+		            
+		        	$("#button_video_upload").removeClass("ui-button-disabled");
+		        	//console.log('Uploads fail');
+		        },
+		        progressall: function (e, data) {
+		            var progress = parseInt(data.loaded / data.total * 100, 10);
+		            $('#video_progress .progress-bar').css(
+		                'width',
+		                progress + '%'
+		            );
+		            $("#video_progress_percents").text(progress + '%');
+		        }
+		    }).prop('disabled', !$.support.fileInput)
+		        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+		    
+		    
+
+
+			$('#text_video_url')
+			.on("keyup", function() {
+				var value = $.trim($(this).val());
+			    if(/^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value)) {
+			    	$('#button_video_download').removeClass("ui-button-disabled");
+			    } else {
+			    	$('#button_video_download').addClass("ui-button-disabled");
+			    }
+			    
+			    //$("#video_error").hide();
+			    window.top.hideVideoError();
+			})
+			.bind('paste', function () {
+				setTimeout(function () {
+					var value = $('#text_video_url').val();
+					if(/^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value)) {
+				    	$('#button_video_download').removeClass("ui-button-disabled");
+				    } else {
+				    	$('#button_video_download').addClass("ui-button-disabled");
+				    }
+				},100);
+				
+				//$("#video_error").hide();
+				window.top.hideVideoError();
+			})
+			.urlInputBox();
+
+			$('#button_video_download').click(function(e) {
+				
+				if(!$(this).hasClass("ui-button-disabled")) {
+					
+					$(this).addClass("ui-button-disabled");
+					
+					$("#video_form").hide();
+					$("#video_progress_container").show();
+					
+					//alert(window.top.getResourceId(2));
+				
+					
+					//var interval = null;
+					
+					//var boundary = "---------------------------" + (new Date).getTime();
+					
+					$.ajax({
+						type: "POST",
+				        url: "handlers/import.ashx",
+				        data: { 
+				        	resourceUrl : $('#text_video_url').val(),
+				        	resourceTypeId : 1,
+							resourceId : resourceId,
+							thumbnailResourceId : thumbnailResourceId
+				        },
+				        dataType: "json",
+			            cache: false, // Do not cache the page
+			            //xhr: function() { var xhr = jQuery.ajaxSettings.xhr(); xhr.send = xhr.sendAsBinary; return xhr; },
+			            //contentType: "multipart/form-data; boundary=" + boundary.slice(2),
+			            //complete: function() { console.log("Completed."); },
+			            progress: function(evt) {
+			            	if (evt.lengthComputable) {
+			            		
+			            		//var percentComplete = evt.loaded / evt.total;
+						         //Do something with download progress
+						         
+						        var progress = parseInt(evt.loaded / evt.total * 100, 10);
+					            $('#video_progress .progress-bar').css(
+					                'width',
+					                progress + '%'
+					            );
+					            $("#video_progress_percents").text(progress + '%');
+						            
+			            		//console.log("Loaded " + parseInt( (evt.loaded / evt.total * 100), 10) + "%");
+			            	} else {
+			            		//console.log("Length not computable.");
+			            	}
+			            },
+						success: function(data) {
+							
+							if(data[0].error != undefined) {
+								
+								// alert("ERR -> switch back");
+								
+								
+								$("#video_progress_container").hide();
+								
+								
+								//$("#video_error").show();
+								window.top.showVideoError("Invalid URL. Please try again.");
+								
+								
+					        	$("#video_form").show();
+					        	
+					        	$('#text_video_url').val("");
+					        	$('#button_video_download').removeClass("ui-button-disabled");
+								
+								
+							} else {
+						
+								$('#button_video_download').removeClass("ui-button-disabled");
+								renderVideo(data);
+							
+							}
+						
+						},
+						error: function() {
+							$('#button_video_download').removeClass("ui-button-disabled");
+						}
+					});
+
+				}
+
+				e.preventDefault();
+			});
+			
+			
+			/*
+			// change video
+			$("#button_video_change").click(function(e) {
+				
+				$("#video_upload_preview").hide();
+				$("#video_upload_actions").show();
+				
+				// reset values
+				$("#text_video_url").val("");
+				
+				$('#video_progress .progress-bar').css(
+					'width',
+					0 + '%'
+				);
+				$("#video_progress_percents").text(0 + '%');
+					
+				e.preventDefault();
+			});
+			*/
+			
+			$("#button_video_remove").click(function(e) {
+				window.top.removeVideo(index);
+				e.preventDefault();
+			});
+			
+			
+			/*
+			// cancel video
+			$("#button_video_cancel").click(function(e) {
+				
+				$("#video_upload_actions").hide();
+				$("#video_upload_preview").show();
+				
+				// reset values
+				$("#text_video_url").val("");
+				
+				$('#video_progress .progress-bar').css(
+					'width',
+					0 + '%'
+				);
+				$("#video_progress_percents").text(0 + '%');
+					
+				e.preventDefault();
+			});
+			*/
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			function renderImage(data) {
+			
+				$("#image_name").text(data[0].name);
+				$("#image_size").text(data[0].width + "x" + data[0].height);
+				
+				$("#image_preview").empty();
+				
+				var img = new Image();
+					img.width = 80;
+
+				// wrap our new image in jQuery, then:
+				$(img).load(function () {
+			      // set the image hidden by default    
+			      $(this).hide();
+			    
+			      	$("#image_preview").append(this);
+			    	
+			      	// fade our image in to create a nice effect
+			      	$(this).show();
+
+			    })
+			    .error(function () {
+			    	// error
+			    })
+			    .attr("src", data[0].thumbnailUrl);
+				
+				
+				setTimeout(function(){
+					$("#image_upload_preview").show();
+					$("#image_upload_actions").hide();
+					
+					$("#image_progress_container").hide();
+					
+					//$("#image_cancel_action").show();
+					
+				}, 300);
+				
+				
+				window.top.setImage(data, index);
+				
+			};
+		    
+		    
+		    // image
+		    $('#image_upload').fileupload({
+		        url: url + "?resourceTypeId=2&resourceId=" + resourceId,
+		        dataType: 'json',
+				pasteZone : null,
+				dropZone : null,
+		        start : function (e) {
+		            
+		        	$("#button_image_upload").addClass("ui-button-disabled");
+		        	
+		        	//$("#image_error").hide();
+		        	window.top.hideImageError();
+		        	
+		        	$("#image_form").hide(); // new
+					$("#image_progress_container").show();
+					
+		        	//console.log('Uploads started');
+		        },
+		        done: function (e, data) {
+		        	
+		        	/*
+		            $.each(data.result.files, function (index, file) {
+		                $('<p/>').text(file.name).appendTo('#image_files');
+		            });
+		            */
+		            
+		            $("#button_image_upload").removeClass("ui-button-disabled");
+		            
+		            renderImage(data.result);
+		            
+		        },
+		        fail : function (e) {
+		            
+		        	$("#button_image_upload").removeClass("ui-button-disabled");
+		        	//console.log('Uploads fail');
+		        },
+		        progressall: function (e, data) {
+		            var progress = parseInt(data.loaded / data.total * 100, 10);
+		            $('#image_progress .progress-bar').css(
+		                'width',
+		                progress + '%'
+		            );
+		            $("#image_progress_percents").text(progress + '%');
+		            
+		            //console.log(progress);
+		            
+		        }
+		    }).prop('disabled', !$.support.fileInput)
+		        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+		    
+		    
+		    $('#text_image_url')
+			.on("keyup", function() {
+				var value = $.trim($(this).val());
+			    if(/^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value)) {
+			    	$('#button_image_download').removeClass("ui-button-disabled");
+			    } else {
+			    	$('#button_image_download').addClass("ui-button-disabled");
+			    }
+			    
+			    //$("#image_error").hide();
+			    window.top.hideImageError();
+			})
+			.bind('paste', function () {
+				setTimeout(function () {
+					var value = $('#text_image_url').val();
+					if(/^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value)) {
+				    	$('#button_image_download').removeClass("ui-button-disabled");
+				    } else {
+				    	$('#button_image_download').addClass("ui-button-disabled");
+				    }
+				},100);
+				
+				//$("#image_error").hide();
+				window.top.hideImageError();
+			})
+			.urlInputBox();
+
+
+			$('#button_image_download').click(function(e) {
+			
+				if(!$(this).hasClass("ui-button-disabled")) {
+					
+					$(this).addClass("ui-button-disabled");
+					
+					$("#image_form").hide();
+					$("#image_progress_container").show();
+					
+					$('#image_progress .progress-bar').css(
+		                'width',
+		                0 + '%'
+		            );
+
+					$.ajax({
+						/*
+						xhr: function() {
+							
+							if(window.ActiveXObject){
+								return new window.ActiveXObject("Microsoft.XMLHTTP");
+							} else {
+								var xhr = new window.XMLHttpRequest();
+					
+						     
+							     //Upload progress
+							     xhr.upload.addEventListener("progress", function(evt){
+							       if (evt.lengthComputable) {
+							         var percentComplete = evt.loaded / evt.total;
+							         
+							        
+							         
+							         //Do something with upload progress
+							         //console.log(progressComplete + "____image");
+							       }
+							     }, false);
+							     //Download progress
+							     xhr.addEventListener("progress", function(evt){
+							       if (evt.lengthComputable) {
+							         var percentComplete = evt.loaded / evt.total;
+							         //Do something with download progress
+							         
+							          var progress = parseInt(evt.loaded / evt.total * 100, 10);
+							            $('#image_progress .progress-bar').css(
+							                'width',
+							                progress + '%'
+							            );
+							            $("#image_progress_percents").text(progress + '%');
+							         
+							         //console.log(percentComplete + "____image");
+							       }
+							     }, false);
+							     return xhr;
+						     }
+						},
+						*/
+						type: "POST",
+				        url: "handlers/import.ashx",
+				        data: { 
+				        	resourceUrl : $('#text_image_url').val(),
+				        	resourceTypeId : 2,
+							resourceId : resourceId
+				        },
+				        dataType: "json",
+				        cache: false,
+				        progress: function(evt) {
+			            	if (evt.lengthComputable) {
+			            		
+			            		var progress = parseInt(evt.loaded / evt.total * 100, 10);
+					            $('#image_progress .progress-bar').css(
+					                'width',
+					                progress + '%'
+					            );
+					            $("#image_progress_percents").text(progress + '%');
+						            
+			            		//console.log("Loaded " + parseInt( (evt.loaded / evt.total * 100), 10) + "%");
+			            	} else {
+			            		//console.log("Length not computable.");
+			            	}
+			            },
+						success: function(data) {
+						
+							if(data[0].error != undefined) {
+								
+								//alert("ERR -> switch back");
+								
+								$("#image_progress_container").hide();
+								
+								//$("#image_error").show();
+								window.top.showImageError("Invalid URL. Please try again.");
+								
+								
+								$("#image_form").show();
+					        	
+					        	$('#text_image_url').val("");
+					        	$('#button_image_download').removeClass("ui-button-disabled");
+					        	
+								
+							} else {
+							
+								$('#button_image_download').removeClass("ui-button-disabled");
+								renderImage(data);
+							}
+						
+						},
+						error: function() {
+							$('#button_image_download').removeClass("ui-button-disabled");
+						}
+					});
+
+				}
+
+				e.preventDefault();
+			});
+
+			
+			/*
+			// change
+			$("#button_image_change").click(function(e) {
+				
+				$("#image_upload_preview").hide();
+				$("#image_upload_actions").show();
+				
+				// reset values
+				$("#text_image_url").val("");
+				
+				$('#image_progress .progress-bar').css(
+					'width',
+					0 + '%'
+				);
+				$("#image_progress_percents").text(0 + '%');
+					
+				e.preventDefault();
+			});
+			*/
+			
+			$("#button_image_remove").click(function(e) {
+				window.top.removeImage(index);
+				e.preventDefault();
+			});
+			
+			/*
+			// cancel image
+			$("#button_image_cancel").click(function(e) {
+				
+				$("#image_upload_actions").hide();
+				$("#image_upload_preview").show();
+				
+				// reset values
+				$("#text_image_url").val("");
+				
+				$('#image_progress .progress-bar').css(
+					'width',
+					0 + '%'
+				);
+				$("#image_progress_percents").text(0 + '%');
+					
+				e.preventDefault();
+			});
+			*/
+
+			
+
+			// video
+			if(resourceTypeId == 1) {
+				$("#video").show();
+				
+				if(modeId == 2) {
+					
+					$("#video_upload_actions").hide();
+					$("#video_upload_preview").show();
+					
+					// video details
+					$("#video_name").text($.getUrlParam("name"));
+					$("#video_size").text($.getUrlParam("width") + "x" + $.getUrlParam("height"));
+					
+					$("#video_preview").empty();
+					
+					var img = new Image();
+						img.width = 80;
+
+					// wrap our new image in jQuery, then:
+					$(img).load(function () {
+				      // set the image hidden by default    
+				      $(this).hide();
+				    
+				      	$("#video_preview").append(this);
+				    	
+				      	// fade our image in to create a nice effect
+				      	$(this).show();
+
+				    })
+				    .error(function () {
+				    	// error
+				    })
+				    .attr("src", $.getUrlParam("thumbnail_url"));
+					
+					
+				}
+			}
+			
+			// images
+			if(resourceTypeId == 2) {
+				$("#image").show();
+			
+				if(modeId == 2) {
+					
+					$("#image_upload_actions").hide();
+					$("#image_upload_preview").show();
+					
+					// image details
+					$("#image_name").text($.getUrlParam("name"));
+					$("#image_size").text($.getUrlParam("width") + "x" + $.getUrlParam("height"));
+					
+					$("#image_preview").empty();
+					
+					var img = new Image();
+						img.width = 80;
+
+					// wrap our new image in jQuery, then:
+					$(img).load(function () {
+				      // set the image hidden by default    
+				      $(this).hide();
+				    
+				      	$("#image_preview").append(this);
+				    	
+				      	// fade our image in to create a nice effect
+				      	$(this).show();
+
+				    })
+				    .error(function () {
+				    	// error
+				    })
+				    .attr("src", $.getUrlParam("url"));
+					
+					
+				}
+
+			}
+			
+			
+			
+			
+			
+			
+			
+			function renderAudio(data) {
+			
+				$("#audio_name").text(data[0].name);
+				
+				$("#audio_preview").empty();
+				
+				setTimeout(function(){
+					$("#audio_upload_preview").show();
+					$("#audio_upload_actions").hide();
+					
+					$("#audio_progress_container").hide();
+					
+				}, 300);
+				
+				window.top.setAudio(data, index);
+				
+			};
+			
+		    // audio upload - browse
+		    $('#audio_upload').fileupload({
+		        url: url + "?resourceTypeId=" + resourceTypeId + "&resourceId=" + resourceId,
+		        dataType: 'json',
+				pasteZone : null,
+				dropZone : null,
+		        start : function (e) {
+					
+		        	$("#button_audio_upload").addClass("ui-button-disabled");
+		        	window.top.hideAudioError();
+		        	
+		        	$("#audio_form").hide(); // new
+					$("#audio_progress_container").show();
+					
+		        },
+		        done: function (e, data) {
+					
+					if(data.result[0].error != undefined) {
+						
+						$("#audio_progress_container").hide();
+						
+						window.top.showAudioError(data.result[0].error);
+						
+						$("#audio_form").show();
+			        	
+			        	$('#text_audio_url').val("");
+			        	$('#button_audio_download').removeClass("ui-button-disabled");
+						$("#button_audio_upload").removeClass("ui-button-disabled");
+						
+					} else {
+					
+			            $("#button_audio_upload").removeClass("ui-button-disabled");
+			            renderAudio(data.result);
+						
+					}
+		            
+		        },
+		        fail : function (e) {
+		        	$("#button_audio_upload").removeClass("ui-button-disabled");
+		        },
+		        progressall: function (e, data) {
+		            var progress = parseInt(data.loaded / data.total * 100, 10);
+		            $('#audio_progress .progress-bar').css(
+		                'width',
+		                progress + '%'
+		            );
+		            $("#audio_progress_percents").text(progress + '%');
+		            
+		        }
+		    }).prop('disabled', !$.support.fileInput)
+		        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+		    
+		    
+		    $('#text_audio_url')
+			.on("keyup", function() {
+				var value = $.trim($(this).val());
+			    if(/^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value)) {
+			    	$('#button_audio_download').removeClass("ui-button-disabled");
+			    } else {
+			    	$('#button_audio_download').addClass("ui-button-disabled");
+			    }
+			    
+				// hide audio error
+			    window.top.hideAudioError();
+			})
+			.bind('paste', function () {
+				setTimeout(function () {
+					var value = $('#text_audio_url').val();
+					if(/^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value)) {
+				    	$('#button_audio_download').removeClass("ui-button-disabled");
+				    } else {
+				    	$('#button_audio_download').addClass("ui-button-disabled");
+				    }
+				},100);
+				
+				// hide audio error
+				window.top.hideAudioError();
+			})
+			.urlInputBox();
+
+			// audio download
+			$('#button_audio_download').click(function(e) {
+			
+				if(!$(this).hasClass("ui-button-disabled")) {
+					
+					$(this).addClass("ui-button-disabled");
+					
+					$("#audio_form").hide();
+					$("#audio_progress_container").show();
+					
+					$('#audio_progress .progress-bar').css(
+		                'width',
+		                0 + '%'
+		            );
+
+					$.ajax({
+						/*
+						xhr: function() {
+							
+							if(window.ActiveXObject){
+								return new window.ActiveXObject("Microsoft.XMLHTTP");
+							} else {
+								var xhr = new window.XMLHttpRequest();
+					
+						     
+							     //Upload progress
+							     xhr.upload.addEventListener("progress", function(evt){
+							       if (evt.lengthComputable) {
+							         var percentComplete = evt.loaded / evt.total;
+							         
+							        
+							         
+							         //Do something with upload progress
+							         //console.log(progressComplete + "____image");
+							       }
+							     }, false);
+							     //Download progress
+							     xhr.addEventListener("progress", function(evt){
+							       if (evt.lengthComputable) {
+							         var percentComplete = evt.loaded / evt.total;
+							         //Do something with download progress
+							         
+							          var progress = parseInt(evt.loaded / evt.total * 100, 10);
+							            $('#image_progress .progress-bar').css(
+							                'width',
+							                progress + '%'
+							            );
+							            $("#image_progress_percents").text(progress + '%');
+							         
+							         //console.log(percentComplete + "____image");
+							       }
+							     }, false);
+							     return xhr;
+						     }
+						},
+						*/
+						type: "POST",
+				        url: "handlers/import.ashx",
+				        data: { 
+				        	resourceUrl : $('#text_audio_url').val(),
+				        	resourceTypeId : resourceTypeId,
+							resourceId : resourceId
+				        },
+				        dataType: "json",
+				        cache: false,
+				        progress: function(evt) {
+			            	if (evt.lengthComputable) {
+			            		
+			            		var progress = parseInt(evt.loaded / evt.total * 100, 10);
+					            $('#audio_progress .progress-bar').css(
+					                'width',
+					                progress + '%'
+					            );
+					            $("#audio_progress_percents").text(progress + '%');						            
+			            		//console.log("Loaded " + parseInt( (evt.loaded / evt.total * 100), 10) + "%");
+			            	} else {
+			            		//console.log("Length not computable.");
+			            	}
+			            },
+						success: function(data) {
+						
+							if(data[0].error != undefined) {
+								
+								$("#audio_progress_container").hide();
+								
+								window.top.showAudioError("Invalid URL. Please try again.");
+								
+								$("#audio_form").show();
+					        	
+					        	$('#text_audio_url').val("");
+					        	$('#button_audio_download').removeClass("ui-button-disabled");
+								
+							} else {
+							
+								$('#button_audio_download').removeClass("ui-button-disabled");
+								renderAudio(data);
+							}
+						
+						},
+						error: function() {
+							$('#button_audio_download').removeClass("ui-button-disabled");
+						}
+					});
+
+				}
+
+				e.preventDefault();
+			});
+			
+			// remove audio
+			$("#button_audio_remove").click(function(e) {
+				window.top.removeAudio(index);
+				e.preventDefault();
+			});
+			
+			// audio
+			if(resourceTypeId == 5) {
+				$("#audio").show();
+			
+				if(modeId == 2) {
+					
+					$("#audio_upload_actions").hide();
+					$("#audio_upload_preview").show();
+					
+					// audio details
+					$("#audio_name").text($.getUrlParam("name"));
+					
+					$("#audio_preview").empty();
+					
+				}
+
+			}
+			
+		    
+		});
+		</script>
+		
+		
+	</body>
+</html>

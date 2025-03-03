@@ -1,0 +1,46 @@
+delimiters "$","$"
+
+html(ad, cid)::=<<
+<!DOCTYPE html>
+<html> 
+	<head>
+		<title></title>
+		<meta charset="utf-8" />
+		
+		<script src="http://m1.fwmrm.net/g/lib/template/mraid.js"></script>
+	</head>
+	<body>
+		
+		<div id="container">
+			<div id="loader">loading...</div>
+			<div id="playback">
+				<div style="position: absolute;">
+					<video id="video" width="640" height="360"></video>
+				</div>
+				<div id="element" style="position: relative;"></div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+		<script type="text/javascript">
+		var ad = {
+			video : {
+				source : {
+					"video/ogg" : "http://skipad.resources.dev.s3.amazonaws.com/concept/517908682_1.ogv",
+					"video/mp4" : "http://avideos.5min.com/87/5179087/517908682_1.mp4"
+				},
+				duration : 30000,
+				width : 640,
+				height: 360
+			},
+			videoClickUrl : "http://aol.com",
+			imageUrl : "http://skipr.skipad.com/f49e4726-4c2a-4902-8c79-995b0d69396e/i_640x360x8d076994bce7173.jpg",
+			imageClickUrl : "http://www.verizonwireless.com/b2c/device/nokia-phones"
+		};
+		</script>
+		
+		
+	</body>
+</html>
+>>

@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{08C7D409-3B5A-40D9-8920-390FA197CA31}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Inqwise.Skipad</RootNamespace>
+    <AssemblyName>Skipad</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AWSSDK, Version=1.0.14.1, Culture=neutral, PublicKeyToken=cd2d24cd2bace800, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\3rd-party\AWSSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="Jayrock">
+      <HintPath>..\3rd-party\Jayrock.dll</HintPath>
+    </Reference>
+    <Reference Include="Jayrock.Json">
+      <HintPath>..\3rd-party\Jayrock.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\dev\3rd-party\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\..\..\dev\3rd-party\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Actions\AddAudioAction.cs" />
+    <Compile Include="Actions\AddImageAction.cs" />
+    <Compile Include="Actions\AddResourceFileAction.cs" />
+    <Compile Include="Actions\AddVideoAction.cs" />
+    <Compile Include="Common\DsAdsStatistics.cs">
+      <DependentUpon>DsAdsStatistics.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\DsAdsStatistics1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DsAdsStatistics.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Common\DsCampaignsOverallStatistics.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DsCampaignsOverallStatistics.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Common\DsCampaignsStatistics.cs">
+      <DependentUpon>DsCampaignsStatistics.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\DsCampaignsStatistics.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DsCampaignsStatistics.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Common\DsDomainsStatistics.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DsDomainsStatistics.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Common\DsReferralsStatistics.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DsReferralsStatistics.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Dal\AccountsDataAccess.cs" />
+    <Compile Include="Dal\AdsDataAccess.cs" />
+    <Compile Include="Dal\CampaignsDataAccess.cs" />
+    <Compile Include="Dal\DataAccess.cs" />
+    <Compile Include="Dal\ExternalTargetEventsDataAccess.cs" />
+    <Compile Include="Dal\PackagesDataAccess.cs" />
+    <Compile Include="Dal\PropertiesDataAccess.cs" />
+    <Compile Include="Dal\ReferralsDataAccess.cs" />
+    <Compile Include="Dal\ResourcesDataAccess.cs" />
+    <Compile Include="Entities\Account.cs" />
+    <Compile Include="Entities\Ad.cs" />
+    <Compile Include="Entities\Campaign.cs" />
+    <Compile Include="Entities\ExternalTargetEvent.cs" />
+    <Compile Include="Entities\Package.cs" />
+    <Compile Include="Entities\Property.cs" />
+    <Compile Include="Entities\PropertyGroup.cs" />
+    <Compile Include="Entities\Resource.cs" />
+    <Compile Include="Entities\ResourceFile.cs" />
+    <Compile Include="Managers\AccountsManager.cs" />
+    <Compile Include="Managers\AdsManager.cs" />
+    <Compile Include="Managers\CampaignsManager.cs" />
+    <Compile Include="Managers\ExternalTargetEventsManager.cs" />
+    <Compile Include="Managers\PackagesManager.cs" />
+    <Compile Include="Managers\PropertiesManager.cs" />
+    <Compile Include="Managers\ReferralsManager.cs" />
+    <Compile Include="Managers\ResourcesManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemFramework\AmazonHelper.cs" />
+    <Compile Include="SystemFramework\FileInfoUtils.cs" />
+    <Compile Include="SystemFramework\FileTypeDetective\Detective.cs" />
+    <Compile Include="SystemFramework\FileTypeDetective\FileType.cs" />
+    <Compile Include="SystemFramework\ImageProcess.cs" />
+    <Compile Include="SystemFramework\MediaInfoDll.cs" />
+    <Compile Include="SystemFramework\MediaInfoUtils.cs" />
+    <Compile Include="SystemFramework\HttpUtils.cs" />
+    <Compile Include="SystemFramework\MediaInfoWraper.cs" />
+    <Compile Include="SystemFramework\StringUtils.cs" />
+    <Compile Include="SystemFramework\VideoEncoder\AudioFile.cs" />
+    <Compile Include="SystemFramework\VideoEncoder\EncodedVideo.cs" />
+    <Compile Include="SystemFramework\VideoEncoder\Encoder.cs" />
+    <Compile Include="SystemFramework\VideoEncoder\QuickAudioEncodingCommands.cs" />
+    <Compile Include="SystemFramework\VideoEncoder\QuickVideoEncodingCommands.cs" />
+    <Compile Include="SystemFramework\VideoEncoder\VideoFile.cs" />
+    <Compile Include="SystemFramework\VideoProcess.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MediaInfo.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Common\DsAdsStatistics.xsc">
+      <DependentUpon>DsAdsStatistics.xsd</DependentUpon>
+    </None>
+    <None Include="Common\DsAdsStatistics.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DsAdsStatistics1.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Common\DsAdsStatistics.xss">
+      <DependentUpon>DsAdsStatistics.xsd</DependentUpon>
+    </None>
+    <None Include="Common\DsCampaignsOverallStatistics.xsc">
+      <DependentUpon>DsCampaignsOverallStatistics.xsd</DependentUpon>
+    </None>
+    <None Include="Common\DsCampaignsOverallStatistics.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DsCampaignsOverallStatistics.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Common\DsCampaignsOverallStatistics.xss">
+      <DependentUpon>DsCampaignsOverallStatistics.xsd</DependentUpon>
+    </None>
+    <None Include="Common\DsCampaignsStatistics.xsc">
+      <DependentUpon>DsCampaignsStatistics.xsd</DependentUpon>
+    </None>
+    <None Include="Common\DsCampaignsStatistics.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DsCampaignsStatistics.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Common\DsCampaignsStatistics.xss">
+      <DependentUpon>DsCampaignsStatistics.xsd</DependentUpon>
+    </None>
+    <None Include="Common\DsDomainsStatistics.xsc">
+      <DependentUpon>DsDomainsStatistics.xsd</DependentUpon>
+    </None>
+    <None Include="Common\DsDomainsStatistics.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DsDomainsStatistics.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Common\DsDomainsStatistics.xss">
+      <DependentUpon>DsDomainsStatistics.xsd</DependentUpon>
+    </None>
+    <None Include="Common\DsReferralsStatistics.xsc">
+      <DependentUpon>DsReferralsStatistics.xsd</DependentUpon>
+    </None>
+    <None Include="Common\DsReferralsStatistics.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DsReferralsStatistics.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Common\DsReferralsStatistics.xss">
+      <DependentUpon>DsReferralsStatistics.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Skipad.Common\Skipad.Common.csproj">
+      <Project>{e8458174-08c9-436d-af05-9853b4655a21}</Project>
+      <Name>Skipad.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

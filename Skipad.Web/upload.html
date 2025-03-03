@@ -1,0 +1,638 @@
+﻿<!DOCTYPE HTML>
+<!--
+/*
+ * jQuery FileInfo Upload Plugin Basic Demo 1.2.2
+ * https://github.com/blueimp/jQuery-FileInfo-Upload
+ *
+ * Copyright 2013, Sebastian Tschan
+ * https://blueimp.net
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+-->
+<html lang="en">
+	<head>
+	<!-- Force latest IE rendering engine or ChromeFrame if installed -->
+	<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+	<meta charset="utf-8">
+	<title></title>
+	
+	<style type="text/css">
+	html{color:#000;background:#ffffff;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}del,ins{text-decoration:none;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:baseline;}sub{vertical-align:baseline;}legend{color:#000;}input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}input,button,textarea,select{*font-size:100%;}
+	html, body{background:#ffffff;}
+	body{font-family:arial,helvetica,sans-serif;font-size:12px;color:#666;margin:0;padding:0;line-height:16px;word-wrap:break-word;unicode-bidi:embed;}
+	a{text-decoration:none; color: #1155CC }
+	a:hover{text-decoration:underline;}
+	.button-green{
+		padding:1px 6px;
+		display:inline-block;
+		text-decoration:none;
+		font-weight:bold;
+		color:#fff;
+		background-color:#57995B;
+		border:1px solid #457D45;
+		X-webkit-box-shadow:0 0 3px #CCCCCC;
+		X-moz-box-shadow:0 0 3px #CCCCCC;
+		Xbox-shadow:0 0 3px #CCCCCC;
+		X-webkit-border-radius:3px;
+		X-moz-border-radius:3px;
+		Xborder-radius:3px;
+		Xmargin:2px;
+		text-align:center;
+		text-shadow:0 1px 1px #3B6E22;
+		background-image:-moz-linear-gradient(top, #57995B, #518F55);
+		background-image:-webkit-gradient(linear, left top, left bottom, from(#57995B), to(#518F55));
+		background-image:-webkit-linear-gradient(#57995B, #518F55);
+		background-image:     -ms-linear-gradient(#57995B, #518F55); /* IE10 */
+		background-image:-o-linear-gradient(#57995B, #518F55);
+		background-image:linear-gradient(top, #57995B, #518F55);
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#57995B', endColorstr='#518F55');
+		cursor:pointer;
+	}
+	input.button-green { padding: 1px 4px;}
+	.button-green:hover{
+		background-color:#559658;
+		background-image:-moz-linear-gradient(top, #559658, #49894d);
+		background-image:-webkit-gradient(linear, left top, left bottom, from(#559658), to(#49894d));
+		background-image:-webkit-linear-gradient(#559658, #49894d);
+		background-image:     -ms-linear-gradient(#559658, #49894d); /* IE10 */
+		background-image:-o-linear-gradient(#559658, #49894d);
+		background-image:linear-gradient(top, #559658, #49894d);
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#559658', endColorstr='#49894d');
+		text-decoration:none;
+	}
+	.button-green span{color:#fff !important;text-decoration:none;padding:1px 0 2px;display:inline-block;margin:0;line-height:13px;}
+	.button-green:hover span{color:#fff !important;text-decoration:none;}
+	.button-green.ui-button-disabled {
+		filter: none;
+		background: none repeat scroll 0 0 #F2F2F2;
+	    border-color: #C8C8C8;
+	    box-shadow: none;
+	    cursor: default;
+	    text-shadow: none;
+	}
+	.button-green.ui-button-disabled span {
+		color: #B8B8B8 !important;
+	}
+	.button-green.ui-button-disabled span i {
+		opacity: 0.2;
+		filter: alpha(opacity = 20);
+	}
+	
+	.button-white{
+		padding:1px 6px;
+		display:inline-block;
+		text-decoration:none;
+		font-weight:bold;
+		color:#333;
+		text-align:center;
+		text-shadow:0 1px 0 #fff;
+		background-color:#e5e5e5;
+		background-image:-moz-linear-gradient(top, #f9f9f9, #e5e5e5);
+		background-image:-webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#e5e5e5));
+		background-image:-webkit-linear-gradient(#f9f9f9, #e5e5e5);
+		background-image:     -ms-linear-gradient(#f9f9f9, #e5e5e5); /* IE10 */
+		background-image:-o-linear-gradient(#f9f9f9, #e5e5e5);
+		background-image:linear-gradient(top, #f9f9f9, #e5e5e5);
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9', endColorstr='#e5e5e5');
+		cursor:pointer;
+		border-color: #999999 #999999 #888888;
+	    border-image: none;
+	    border-style: solid;
+	    border-width: 1px;
+	}
+	input.button-white { padding: 1px 4px;}
+	.button-white:hover{
+		background-color:#ddd;
+		background-image:-moz-linear-gradient(top, #e5e5e5, #dddddd);
+		background-image:-webkit-gradient(linear, left top, left bottom, from(#e5e5e5), to(#dddddd));
+		background-image:-webkit-linear-gradient(#e5e5e5, #dddddd);
+		background-image:     -ms-linear-gradient(#e5e5e5, #dddddd); /* IE10 */
+		background-image:-o-linear-gradient(#e5e5e5, #dddddd);
+		background-image:linear-gradient(top, #e5e5e5, #dddddd);
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e5e5e5', endColorstr='#dddddd');
+		text-decoration:none;
+		border-color:#999;
+	}
+	.button-white span{color:#333 !important;text-decoration:none;padding:1px 0 2px;display:inline-block;margin:0;line-height:13px;}
+	.button-white:hover span{color:#333 !important;text-decoration:none;}
+	.button-white.ui-button-disabled {
+		filter: none;
+		background: none repeat scroll 0 0 #F2F2F2;
+	    border-color: #C8C8C8;
+	    box-shadow: none;
+	    cursor: default;
+	    text-shadow: none;
+	}
+	.button-white.ui-button-disabled span {
+		color: #B8B8B8 !important;
+	}
+	.button-white.ui-button-disabled span i {
+		opacity: 0.2;
+		filter: alpha(opacity = 20);
+	}
+	
+	input[type="email"], input[type="number"], input[type="password"], input[type="tel"], input[type="text"], input[type="url"], textarea {
+		Xborder-color: #666666 #CCCCCC #CCCCCC;
+		border-color: #C0C0C0 #D9D9D9 #D9D9D9;
+	    border-style: solid;
+	    border-width: 1px;
+	    font-family: inherit;
+	    font-size: 12px;
+	    margin: 0;
+	    outline-style: none;
+	    padding: 2px;
+	}
+	input[type="email"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="tel"]:hover, input[type="text"]:hover, input[type="url"]:hover, textarea:hover {
+	    -moz-border-bottom-colors: none;
+	    -moz-border-left-colors: none;
+	    -moz-border-right-colors: none;
+	    -moz-border-top-colors: none;
+	    border-color: #A0A0A0 #B9B9B9 #B9B9B9;
+	    border-image: none;
+	    border-right: 1px solid #B9B9B9;
+	    border-style: solid;
+	    border-width: 1px;
+	    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+		-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+	    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+	}
+	input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="url"]:focus, textarea:focus {
+	    border: 1px solid #4D90FE;
+	    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+		-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+	    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+	    outline: medium none;
+	}
+	
+	
+	::-webkit-input-placeholder { color: #999; } /* WebKit browsers */
+	:-moz-placeholder { color: #999; opacity: 1; } /* Mozilla Firefox 4 to 18 */
+	::-moz-placeholder { color: #999; opacity: 1; } /* Mozilla Firefox 19+ */
+	:-ms-input-placeholder { color: #999; } /* Internet Explorer 10+ */
+	input:-moz-placeholder { color:#999; opacity:1; }
+	
+	
+	.fileinput-button {
+	    overflow: hidden;
+	    position: relative;
+	}
+	.fileinput-button input {
+	    cursor: pointer;
+	    direction: ltr;
+	    height: 19px;
+	    left: 0;
+	    margin: 0;
+	    opacity: 0;
+	    position: absolute;
+	    top: 0;
+	}
+	input[type="file"] {
+	    display: block;
+	}
+	.progress {
+		height:16px;
+		overflow:hidden;
+		background-color:#f5f5f5;
+		Xborder-radius:3px;
+		-webkit-box-shadow:inset 0 1px 2px rgba(0,0,0,0.1);
+		box-shadow:inset 0 1px 2px rgba(0,0,0,0.1);
+		border: 1px solid #CCCCCC;
+		width: 100px;
+	}
+	.progress-bar {
+		float:left;
+		width:0;
+		height:100%;
+		color:#fff;
+		text-align:center;
+		background-color:#428bca;
+		-webkit-box-shadow:inset 0 -1px 0 rgba(0,0,0,0.15);
+		box-shadow:inset 0 -1px 0 rgba(0,0,0,0.15);
+	}
+	.progress-bar-success {
+	    Xbackground-color: #5CB85C;
+	}
+	
+	.files { height: 240px; overflow-y: scroll; border: 1px solid #CCCCCC; }
+	.files li { width: 82px; float: left; height: 70px; padding: 5px; }
+	.files li:hover { background: #efefef; cursor: pointer; }
+	.files li div.cell-image {
+		border: 1px solid #CCCCCC;
+    	height: 45px;
+    	width: 80px;
+    	background: none repeat scroll 0 0 #EFEFEF;
+	}
+	.files li div.cell-filename {
+		overflow: hidden;
+    	padding: 5px 0 0 0;
+    	text-overflow: ellipsis;
+    	white-space: nowrap;
+		color: #333;
+	}
+	</style>
+	
+	</head>
+	<body>
+		
+		
+		<div id="video" style="clear: both; display: none;">
+			<div id="video_upload_container">
+				<div style="float: left; min-height: 22px;">
+					<span class="button-white btn-success fileinput-button">
+				        <i class="glyphicon glyphicon-plus"></i>
+				        <span>Browse</span>
+				        <!-- The file input field used as target for the file upload widget -->
+				        <input id="video_upload" type="file" name="files[]">
+				    </span>
+			    </div>
+			    <div style="float: left; min-height: 22px; margin-left: 6px;">
+				    <div style="float: left;">
+						<input type="text" id="text_video_url" autocomplete="off" placeholder="Enter a Video URL" />
+					</div>
+					<div style="float: left; margin-left: 6px;">
+						<a class="button-white ui-button-disabled" title="Download" id="button_video_download"><span>Download</span></a>
+					</div>
+				</div>
+			    <div style="clear: both; padding-top: 5px;">
+				    <div id="video_progress" class="progress">
+				        <div class="progress-bar progress-bar-success"></div>
+				    </div>
+			    </div>
+		    </div>
+		    <div id="video_files_container" style="padding-top: 12px;">
+			    <ul id="video_files" class="files">
+			    	<li>
+			    		<div class="cell-image"></div>
+			    		<div class="cell-filename">filename...</div>
+			    	</li>
+			    </ul>
+		    </div>
+	    </div>
+	    
+		<div id="image" style="clear: both; display: none;">
+			<div id="image_upload_container">
+				<div style="float: left; min-height: 22px;">
+					<span class="button-white btn-success fileinput-button">
+				        <i class="glyphicon glyphicon-plus"></i>
+				        <span>Browse</span>
+				        <!-- The file input field used as target for the file upload widget -->
+				        <input id="image_upload" type="file" name="files[]">
+				    </span>
+			    </div>
+			    <div style="float: left; min-height: 22px; margin-left: 6px;">
+				    <div style="float: left">
+						<input type="text" id="text_image_url" autocomplete="off" placeholder="Enter an Image URL" />
+					</div>
+					<div style="float: left; margin-left: 6px;">
+						<a class="button-white ui-button-disabled" title="Download" id="button_image_download"><span>Download</span></a>
+					</div>
+				</div>
+			    <div style="clear: both; padding-top: 5px;">
+				    <div id="image_progress" class="progress">
+				        <div class="progress-bar progress-bar-success"></div>
+				    </div>
+			    </div>
+		    </div>
+		    <div id="image_files_container" style="padding-top: 12px;">
+			    <!-- The container for the uploaded files -->
+			    <ul id="image_files" class="files"></ul>
+	    	</div>
+	    </div>
+	    
+	    
+	    
+	    
+	    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+	    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="scripts/utils/utils.js" charset="utf-8"></script>
+	    
+	    <script type="text/javascript" src="scripts/fileupload/vendor/jquery.ui.widget.js"></script>
+		<script type="text/javascript" src="scripts/fileupload/jquery.iframe-transport.js"></script>
+		<script type="text/javascript" src="scripts/fileupload/jquery.fileupload.js"></script>
+		<script type="text/javascript">
+
+		var resourceTypeId = ($.getUrlParam("resource_type_id") != "" ? parseInt($.getUrlParam("resource_type_id")) : 2);
+		var getResources = function(params) {
+			
+			var obj = {
+				getResources : {
+					resourceTypeId : params.resourceTypeId
+				}
+			};
+		
+			$.ajax({
+		        url: "handlers/resources.ashx",
+		        data: { 
+		        	rq : JSON.stringify(obj),
+		        	timestamp : $.getTimestamp()
+		        },
+		        dataType: "json",
+		        success: function (data, status) {
+		        
+		        	if(data != undefined) {
+			        	
+			        	if(data.error != undefined) {
+							
+							/*
+			        		errorHandler({
+								error : data.error	
+							});
+			        		*/
+			        		
+			        		if(params.error != undefined 
+									&& typeof params.error == 'function') {
+								params.error(data);
+							}
+						} else {
+							if(params.success != undefined 
+									&& typeof params.success == 'function') {
+								params.success(data);
+							}
+						}
+		        	} else {
+		        		if(params.error != undefined 
+								&& typeof params.error == 'function') {
+							params.error();
+						}
+		        	}
+		        	
+		        },
+		        error: function (XHR, textStatus, errorThrow) {
+		            // error
+		        }
+		    });
+		};
+
+
+		/*jslint unparam: true */
+		/*global window, $ */
+		$(function () {
+		    'use strict';
+		    // Change this to the location of your server-side upload handler:
+		    var url = "handlers/import.ashx";
+		              
+		    
+		    $('#video_upload').fileupload({
+		        url: url,
+		        dataType: 'json',
+		        done: function (e, data) {
+		            $.each(data.result.files, function (index, file) {
+		                $('<p/>').text(file.name).appendTo('#video_FileInfos');
+		            });
+		        },
+		        progressall: function (e, data) {
+		            var progress = parseInt(data.loaded / data.total * 100, 10);
+		            $('#video_progress .progress-bar').css(
+		                'width',
+		                progress + '%'
+		            );
+		        }
+		    }).prop('disabled', !$.support.fileInput)
+		        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+		    
+		    
+
+
+			$('#text_video_url')
+			.on("keyup", function() {
+				var value = $(this).val();
+			    if(/^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value)) {
+			    	$('#button_video_download').removeClass("ui-button-disabled");
+			    } else {
+			    	$('#button_video_download').addClass("ui-button-disabled");
+			    }
+			})
+			.urlInputBox();
+
+			$('#button_video_download').click(function(e) {
+				
+				if(!$(this).hasClass("ui-button-disabled")) {
+				
+					$.ajax({
+						xhr: function() {
+							
+							if(window.ActiveXObject){
+								return new window.ActiveXObject("Microsoft.XMLHTTP");
+							} else {
+								var xhr = new window.XMLHttpRequest();
+					
+						     
+							     //Upload progress
+							     xhr.upload.addEventListener("progress", function(evt){
+							       if (evt.lengthComputable) {
+							         var percentComplete = evt.loaded / evt.total;
+							         
+							        
+							         
+							         //Do something with upload progress
+							         console.log(progressComplete + "____video");
+							       }
+							     }, false);
+							     //Download progress
+							     xhr.addEventListener("progress", function(evt){
+							       if (evt.lengthComputable) {
+							         var percentComplete = evt.loaded / evt.total;
+							         //Do something with download progress
+							         
+							         
+							          var progress = parseInt(evt.loaded / evt.total * 100, 10);
+							            $('#video_progress .progress-bar').css(
+							                'width',
+							                progress + '%'
+							            );
+							         
+							         
+							         console.log(percentComplete + "____video");
+							       }
+							     }, false);
+							     return xhr;
+						     }
+						},
+						type: "POST",
+				        url: "handlers/import.ashx",
+				        data: { 
+				        	url : $('#text_video_url').val(),
+				        	resourceTypeId : 1
+				        },
+				        dataType: "json",
+						success: function() {
+						
+							alert("DONE");
+						
+						}
+					});
+
+				}
+
+				e.preventDefault();
+			});
+			
+			
+			
+		    
+		    
+		    // image
+		    $('#image_upload').fileupload({
+		        url: url,
+		        dataType: 'json',
+		        done: function (e, data) {
+		        	
+		            $.each(data.result.files, function (index, file) {
+		                $('<p/>').text(file.name).appendTo('#image_FileInfos');
+		            });
+		            
+		            
+		            alert("DONE");
+		            
+		        },
+		        progressall: function (e, data) {
+		            var progress = parseInt(data.loaded / data.total * 100, 10);
+		            $('#image_progress .progress-bar').css(
+		                'width',
+		                progress + '%'
+		            );
+		        }
+		    }).prop('disabled', !$.support.fileInput)
+		        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+		    
+		    
+		    $('#text_image_url')
+			.on("keyup", function() {
+				var value = $(this).val();
+			    if(/^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value)) {
+			    	$('#button_image_download').removeClass("ui-button-disabled");
+			    } else {
+			    	$('#button_image_download').addClass("ui-button-disabled");
+			    }
+			})
+			.urlInputBox();
+
+
+			$('#button_image_download').click(function(e) {
+			
+				if(!$(this).hasClass("ui-button-disabled")) {
+
+					$.ajax({
+						xhr: function() {
+							
+							if(window.ActiveXObject){
+								return new window.ActiveXObject("Microsoft.XMLHTTP");
+							} else {
+								var xhr = new window.XMLHttpRequest();
+					
+						     
+							     //Upload progress
+							     xhr.upload.addEventListener("progress", function(evt){
+							       if (evt.lengthComputable) {
+							         var percentComplete = evt.loaded / evt.total;
+							         
+							        
+							         
+							         //Do something with upload progress
+							         console.log(progressComplete + "____image");
+							       }
+							     }, false);
+							     //Download progress
+							     xhr.addEventListener("progress", function(evt){
+							       if (evt.lengthComputable) {
+							         var percentComplete = evt.loaded / evt.total;
+							         //Do something with download progress
+							         
+							         
+							          var progress = parseInt(evt.loaded / evt.total * 100, 10);
+							            $('#image_progress .progress-bar').css(
+							                'width',
+							                progress + '%'
+							            );
+							         
+							         
+							         console.log(percentComplete + "____image");
+							       }
+							     }, false);
+							     return xhr;
+						     }
+						},
+						type: "POST",
+				        url: "handlers/import.ashx",
+				        data: { 
+				        	url : $('#text_image_url').val(),
+				        	resourceTypeId : 2
+				        },
+				        dataType: "json",
+						success: function() {
+						
+							alert("DONE");
+							
+							//window.top.abc();
+							//parent.abc();
+						
+						}
+					});
+
+				}
+
+				e.preventDefault();
+			});
+
+
+
+
+
+			
+
+			// video
+			if(resourceTypeId == 1) {
+				$("#video").show();
+			}
+			
+
+
+			// images
+			if(resourceTypeId == 2) {
+				$("#image").show();
+				
+				getResources({
+					resourceTypeId : resourceTypeId,
+					success : function(data) {
+						
+						if(data.list.length != 0) {
+						
+							for(var i = 0; i < data.list.length; i++) {
+		
+
+								var item = $("<li resource_id=\"" + data.list[i].id + "\" resource_url=\"" + data.list[i].url + "\" resource_name=\"" + data.list[i].name + "\">" +
+										"<div class=\"cell-image\" style=\"background: url(" + data.list[i].url + ") no-repeat scroll 0 0; background-size: 80px 45px\"></div>" +
+										"<div class=\"cell-FileInfoname\">" + data.list[i].name + "</div>" +
+									"</li>").appendTo("#image_FileInfos");
+
+								item.click(function(e) {
+									
+									window.top.setImage($(this).attr("resource_id"), $(this).attr("resource_url"), $(this).attr("resource_name"));									
+			
+									e.preventDefault();
+								});
+								
+	
+							}							
+
+						}
+
+					},
+					error: function(error) {
+						
+						alert("ERR");
+						
+					}
+				});
+
+			}
+		    
+		    
+		});
+		</script>
+		
+		
+	</body>
+</html>

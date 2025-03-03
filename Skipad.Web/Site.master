@@ -1,0 +1,157 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="SiteMaster" %>
+<%@ Register src="UserControls/MenuSide.ascx" tagname="MenuSide" tagprefix="uc2" %>
+
+<!DOCTYPE html>
+<html lang="en">
+	<head id="Head1">
+		<meta charset="utf-8">
+    	<meta http-equiv="Content-Language" content="en-us" />
+
+    	<title>Skip ad</title>
+   
+        <link href="<%=BaseUrl%>/css/global.css" type="text/css" rel="stylesheet" />
+        <link id="favicon" rel="shortcut icon" type="image/png" href="<%=BaseUrl%>/images/favicon.png" />
+	    <link href="<%=BaseUrl%>/css/bootstrap.css" type="text/css" rel="stylesheet" />
+	    <link href="<%=BaseUrl%>/css/lightface/lightface.css" type="text/css" rel="stylesheet" />
+
+	    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" charset="utf-8"></script>
+		<script type="text/javascript">window.jQuery || document.write("<script type=\"text/javascript\" src=\"<%=BaseUrl%>/scripts/jquery/1.8.2/jquery.min.js\"><\/script>")</script>
+		<script type="text/javascript" src="<%=BaseUrl%>/scripts/underscore/underscore-min.js"></script>
+		<script type="text/javascript" src="<%=BaseUrl%>/scripts/utils/utils.js" charset="utf-8"></script>
+	    <!--[if lt IE 8]>
+		<script type="text/javascript" src="<%=BaseUrl%>/scripts/utils/json2.js" charset="utf-8"></script>
+		<![endif]-->
+	    
+	    <script type="text/javascript" src="<%=BaseUrl%>/scripts/lightface/lightface.min.js" charset="utf-8"></script>
+		
+    	<asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
+	</head>
+	<body id="body" class="page">
+    <form id="Form1" runat="server">
+    
+    	<div class="wrapper">
+    
+     		<div class="header">
+            
+	            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+	            	<tr>
+	            		<td valign="top" style="width: 166px;">
+	            			<div class="logo">
+		            			<a href="~/" id="aLogo" runat="server"><img src="<%=BaseUrl%>/images/logo173x58.jpg" alt="" /></a>
+		            		</div>
+						</td>
+						<td valign="top">
+							<div class="auth">
+								<div style="float: left; text-transform: uppercase; font-weight: bold; color: #999">Skip Pre-Roll Management System</div>
+			            		<ul class="ld" style="float: right">
+				            	<asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
+				                    <AnonymousTemplate>
+				                        <li class="last-item"><a href="~/Account/Login.aspx" ID="HeadLoginStatus" runat="server">Log In</a></li>
+				                    </AnonymousTemplate>
+				                    <LoggedInTemplate>
+				                         <li class="first-item">Welcome <b><asp:LoginName ID="HeadLoginName" runat="server" /></b>!</li>
+				                         <li><a href="account/changepassword.aspx" title="Change Password">Change Password</a></li>
+                                         <li><a href="http://skipad.resources.s3.amazonaws.com/SkipAd%20User%20Guide%20Ver%201.04.pdf" title="User Guide" target="_blank">User Guide</a></li>
+				                         <li class="last-item"><asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Log Out" LogoutPageUrl="~/"/></li>
+				                    </LoggedInTemplate>
+				                </asp:LoginView>
+								</ul>
+							</div>
+	            		</td>
+            		</tr>
+        		</table>
+				
+				<select id="select_account" style="display: none"></select>
+				<script type="text/javascript">
+				$(function() {
+					
+					if(typeof accounts != "undefined") {
+					//(function() {
+						
+						var selectAccount = $("#select_account").show();
+						
+						var o = selectAccount[0].options;
+						var _defaultAccount = null;
+						for(var i =0; i < accounts.length; i++) {
+							
+							var k = new Option(accounts[i].name, accounts[i].accountId);
+							try {
+								o.add(k);
+							} catch(ex) {
+								o.add(k, null);
+							}
+						
+							if(accounts[i].isDefault != undefined 
+								&& accounts[i].isDefault == true) {
+									_defaultAccount = accounts[i];
+							}
+						}
+					
+						if($.cookie("aid") == null || $.cookie("aid") == "") {
+							if(_defaultAccount != null) {
+								$("#select_account option[value=" + _defaultAccount.accountId + "]").attr("selected", "selected");
+							
+								// set cookie aid
+								$.cookie("aid", _defaultAccount.accountId);
+							}
+						} else {
+							$("#select_account option[value=" + $.cookie("aid") + "]").attr("selected", "selected");
+						}
+						
+						// change
+						selectAccount.bind("change", function() {
+							
+							// change cookie aid
+							$.cookie("aid", $(this).val());
+							
+							var pathNames = [
+								"/",
+								"/campaigns.aspx",
+								"/ads.aspx",
+								"/themes.aspx",
+								"/account.aspx"
+							];
+							
+							if(_.contains(pathNames, location.pathname)) {
+								location.href = location.href;
+							} else {
+								location.href = "/";
+							}
+							
+						});
+					
+						//})();
+					}
+					
+				});
+				</script>
+				
+			</div>
+
+    
+
+    
+                
+    
+
+
+    <asp:ContentPlaceHolder ID="SloganHolder" runat="server"/>
+
+         	<div id="content" class="content">
+        		<asp:ContentPlaceHolder ID="TitleHolder" runat="server"/>
+     			<asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+
+                 <div class="sidemenu">
+                    <uc2:MenuSide ID="MenuSide1" Visible="false" runat="server" />
+                </div>
+                
+    		</div>
+    		
+    		<div class="footer">
+    			<div>Copyright &copy; 2013 inqwise. All rights reserved.</div>
+    		</div>
+   		</div>
+
+    </form>
+	</body>
+</html>

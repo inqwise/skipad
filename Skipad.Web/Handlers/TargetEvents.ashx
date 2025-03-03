@@ -1,0 +1,1 @@
+﻿<%@ WebHandler Language="C#" CodeBehind="/App_Code/Handlers/TargetEventsHandler.cs" Class="Handlers.TargetEventsHandler" %>

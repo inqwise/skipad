@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsCampaignsOverallStatistics" targetNamespace="http://tempuri.org/DsCampaignsOverallStatistics.xsd" xmlns:mstns="http://tempuri.org/DsCampaignsOverallStatistics.xsd" xmlns="http://tempuri.org/DsCampaignsOverallStatistics.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsCampaignsOverallStatistics" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DsCampaignsOverallStatistics" msprop:Generator_UserDSName="DsCampaignsOverallStatistics">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Campaigns" msprop:Generator_TableClassName="CampaignsDataTable" msprop:Generator_TableVarName="tableCampaigns" msprop:Generator_RowChangedName="CampaignsRowChanged" msprop:Generator_TablePropName="Campaigns" msprop:Generator_RowDeletingName="CampaignsRowDeleting" msprop:Generator_RowChangingName="CampaignsRowChanging" msprop:Generator_RowEvHandlerName="CampaignsRowChangeEventHandler" msprop:Generator_RowDeletedName="CampaignsRowDeleted" msprop:Generator_RowClassName="CampaignsRow" msprop:Generator_UserTableName="Campaigns" msprop:Generator_RowEvArgName="CampaignsRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="VideoClicks" msdata:ReadOnly="true" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="VideoClicks" msprop:Generator_ColumnVarNameInTable="columnVideoClicks" msprop:Generator_ColumnPropNameInTable="VideoClicksColumn" msprop:Generator_UserColumnName="VideoClicks" type="xs:int" minOccurs="0" />
+              <xs:element name="VideoCTR" msdata:ReadOnly="true" msprop:nullValue="_throw" msprop:Generator_ColumnPropNameInRow="VideoCTR" msprop:Generator_ColumnVarNameInTable="columnVideoCTR" msprop:Generator_ColumnPropNameInTable="VideoCTRColumn" msprop:Generator_UserColumnName="VideoCTR" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="BounceRate" msdata:ReadOnly="true" msprop:nullValue="_throw" msprop:Generator_ColumnPropNameInRow="BounceRate" msprop:Generator_ColumnVarNameInTable="columnBounceRate" msprop:Generator_ColumnPropNameInTable="BounceRateColumn" msprop:Generator_UserColumnName="BounceRate" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="SkipAdFitted" msdata:ReadOnly="true" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="SkipAdFitted" msprop:Generator_ColumnVarNameInTable="columnSkipAdFitted" msprop:Generator_ColumnPropNameInTable="SkipAdFittedColumn" msprop:Generator_UserColumnName="SkipAdFitted" type="xs:long" minOccurs="0" />
+              <xs:element name="SkipAdFittedSlide" msdata:ReadOnly="true" msprop:nullValue="_throw" msprop:Generator_ColumnPropNameInRow="SkipAdFittedSlide" msprop:Generator_ColumnVarNameInTable="columnSkipAdFittedSlide" msprop:Generator_ColumnPropNameInTable="SkipAdFittedSlideColumn" msprop:Generator_UserColumnName="SkipAdFittedSlide" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="SkipAdClicks" msdata:ReadOnly="true" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="SkipAdClicks" msprop:Generator_ColumnVarNameInTable="columnSkipAdClicks" msprop:Generator_ColumnPropNameInTable="SkipAdClicksColumn" msprop:Generator_UserColumnName="SkipAdClicks" type="xs:long" minOccurs="0" />
+              <xs:element name="SkipAdCTR" msdata:ReadOnly="true" msprop:nullValue="_throw" msprop:Generator_ColumnPropNameInRow="SkipAdCTR" msprop:Generator_ColumnVarNameInTable="columnSkipAdCTR" msprop:Generator_ColumnPropNameInTable="SkipAdCTRColumn" msprop:Generator_UserColumnName="SkipAdCTR" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="TimeSpentOnSkipAd" msdata:ReadOnly="true" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="TimeSpentOnSkipAd" msprop:Generator_ColumnVarNameInTable="columnTimeSpentOnSkipAd" msprop:Generator_ColumnPropNameInTable="TimeSpentOnSkipAdColumn" msprop:Generator_UserColumnName="TimeSpentOnSkipAd" type="xs:int" minOccurs="0" />
+              <xs:element name="AvgTimeOnSkipAd" msdata:ReadOnly="true" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="AvgTimeOnSkipAd" msprop:Generator_ColumnVarNameInTable="columnAvgTimeOnSkipAd" msprop:Generator_ColumnPropNameInTable="AvgTimeOnSkipAdColumn" msprop:Generator_UserColumnName="AvgTimeOnSkipAd" type="xs:int" minOccurs="0" />
+              <xs:element name="AVGEngagementTime" msdata:ReadOnly="true" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="AVGEngagementTime" msprop:Generator_ColumnVarNameInTable="columnAVGEngagementTime" msprop:Generator_ColumnPropNameInTable="AVGEngagementTimeColumn" msprop:Generator_UserColumnName="AVGEngagementTime" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="TotalEngagementTime" msdata:ReadOnly="true" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="TotalEngagementTime" msprop:Generator_ColumnVarNameInTable="columnTotalEngagementTime" msprop:Generator_ColumnPropNameInTable="TotalEngagementTimeColumn" msprop:Generator_UserColumnName="TotalEngagementTime" type="xs:long" default="0" minOccurs="0" />
+              <xs:element name="SkipAdFittedServed" msdata:ReadOnly="true" msprop:nullValue="_throw" msprop:Generator_ColumnPropNameInRow="SkipAdFittedServed" msprop:Generator_ColumnVarNameInTable="columnSkipAdFittedServed" msprop:Generator_ColumnPropNameInTable="SkipAdFittedServedColumn" msprop:Generator_UserColumnName="SkipAdFittedServed" type="xs:double" default="0" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

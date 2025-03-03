@@ -1,0 +1,1 @@
+﻿<%@ WebHandler Language="C#" CodeBehind="/App_Code/Handlers/AdsHandler.cs" Class="Handlers.AdsHandler" %>

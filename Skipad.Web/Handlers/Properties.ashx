@@ -1,0 +1,1 @@
+﻿<%@ WebHandler Language="C#" Class="Handlers.PropertiesHandler" CodeBehind="/App_Code/Handlers/PropertiesHandler.cs" %>
